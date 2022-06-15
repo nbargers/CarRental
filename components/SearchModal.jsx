@@ -1,41 +1,70 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput} from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import {  useDispatch, useSelector } from 'react-redux'
+import { selectText, updateText, updateMake, updateColor, updateMinimumYear, updateMaxYear } from '../app/reducers/filtersSlice';
+import ColorModalPicker from './ColorModalPicker'
+import MakeModalPicker from './MakeModalPicker';
+import MinimumYearModalPicker from './MinimumYearModalPicker'
+import MaxYearModalPicker from './MaxYearModalPicker';
 
 const SearchModal = ({modalVisible, setModalVisible}) => {
 
-  const [ text, setText ] = useState(null)
+  const dispatch = useDispatch()
+  const textInputted = useSelector(selectText)
+  const [ text, setText ] = useState(textInputted)
+
+  const reset = () => {
+    dispatch(updateMake('Any'))
+    dispatch(updateColor('Any'))
+    dispatch(updateMinimumYear(1950))
+    dispatch(updateMaxYear(2022))
+    setText('')
+  }
+
+  useEffect(() => {
+    dispatch(updateText(text))
+  }, [text]);
+
   return (
         <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
             setModalVisible(!modalVisible);
         }}
         >
         <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>Search for your next vehicle</Text>
+              <Text style={styles.modalText}>Search for your dream rental</Text>
               <TextInput
                 style={styles.input}
                 onChangeText={setText}
-                value={text}
+                autoCapitalize={'words'}
+                value={textInputted}
                 placeholder="Search by make or model"
                 clearButtonMode='while-editing'
               />
-              <View>
-                <Text>Make</Text>
-                <Text>Model</Text>
-                <Text>Year</Text>
-                <Text>Price</Text>
+                  <MakeModalPicker />
+                  <ColorModalPicker />
+                  <MinimumYearModalPicker />
+                  <MaxYearModalPicker />
+              <View style={styles.submit}>    
+                <TouchableOpacity
+                    style={styles.clearButton}
+                    onPress={() => {
+                      reset()
+                    }}
+                >
+                    <Text style={styles.searchText}>Reset Filters</Text>
+                </TouchableOpacity>    
+                <TouchableOpacity
+                    style={styles.searchButton}
+                    onPress={() => setModalVisible(!modalVisible)}
+                >
+                    <Text style={styles.searchText}>Search</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}
-              >
-                  <Text style={styles.textStyle}>Hide Modal</Text>
-              </TouchableOpacity>
             </View>
         </View>
         </Modal>
@@ -45,24 +74,23 @@ const SearchModal = ({modalVisible, setModalVisible}) => {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
+    // justifyContent: "center",
+    // alignItems: "center",
+    flexDirection: 'row',
+    marginTop: 60,
+    marginBottom: 160,
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "whitesmoke",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: "darkgray",
     shadowOffset: {
       width: 0,
       height: 2
-    }
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
+    },
   },
   input: {
     height: 40,
@@ -71,6 +99,37 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  modalText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  searchButton: {
+    height: 40,
+    width: 100,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 6
+  },
+  clearButton: {
+    height: 40,
+    width: 100,
+    backgroundColor: 'darkgrey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 6,
+    marginBottom: 10
+  },
+  searchText: {
+    color: 'white'
+  },
+  submit: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: 225,
+  }
 });
 
 export default SearchModal
