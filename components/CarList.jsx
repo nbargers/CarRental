@@ -3,27 +3,54 @@ import { StyleSheet, FlatList, View, Text} from 'react-native';
 import {  useDispatch, useSelector } from 'react-redux'
 import axios from 'axios';
 import Car from './Car';
-import { selectCarList, updateCarsList } from '../app/reducers/carSlice';
+import { selectCarList, updateCarsList, fetchCars, selectCarStatus } from '../app/reducers/carSlice';
+import { selectAllFilters } from '../app/reducers/filtersSlice';
 
 const CarList = () => {
   const dispatch = useDispatch()
   const carsArray = useSelector(selectCarList)
+  const status = useSelector(selectCarStatus)
+  const filters = useSelector(selectAllFilters)
 
- let testArray = [] 
- const getCars = () => {
-    axios.get('https://myfakeapi.com/api/cars/')
-    .then(function (response) {
-      dispatch(updateCarsList(response.data.cars))
-    })
-    .catch( function (error) {
-      console.log('error', error)
-    })
+
+  useEffect(() => {
+    refreshArray(filters)
+  }, [filters]);
+
+  useEffect(() => {
+    filterArray(filters, status)
+  }, [status]);
+
+  const refreshArray = () => {
+    dispatch(fetchCars())
   }
 
-  //get inital array of cars
-  useEffect(() => {
-    getCars()
-  }, []);
+  const filterArray = (filters, status) => {
+    if (!status) {
+      let arrayToFilter = carsArray
+
+      //filter for make
+      if (filters.make.status){
+        const filteredArr = carsArray.filter(el => el.car === filters.make.value)
+       arrayToFilter = arrayToFilter.filter(el => el.car === filters.make.value)
+      }
+
+      //filter for color
+      if (filters.color.status) {
+        arrayToFilter = arrayToFilter.filter(el => el.car_color === filters.color.value)
+      }
+
+      arrayToFilter = arrayToFilter.filter(el => el.car_model_year >= filters.minimumYear.value)
+
+      arrayToFilter = arrayToFilter.filter(el => el.car_model_year <= filters.maxYear.value)
+
+      if (filters.text.value) {
+        arrayToFilter = arrayToFilter.filter(el => (el.car_color === filters.text.value || el.car === filters.text.value || el.car_model_year === filters.text.value))
+      }
+
+      dispatch(updateCarsList(arrayToFilter))
+    }
+  }
 
   return (
     <View style={styles.cars}>

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import * as apiClient from '../../utils/apiCLient'
 
 const initialState = {
   filters: {
@@ -13,7 +12,7 @@ const initialState = {
     },
     minimumYear: {
         status: false,
-        value: 1950,
+        value: 1900,
     },
     maxYear: {
       status: false,
