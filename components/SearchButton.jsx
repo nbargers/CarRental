@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity} from 'react-native';
+import { useEffect, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import SearchModal from './SearchModal';
 
@@ -9,8 +9,8 @@ const SearchButton = () => {
   return (
    <>
      <TouchableOpacity style={styles.button} title="Search for Cars" onPress={() => setModalVisible(!modalVisible)}>
-        <Text>Search for Cars</Text>
-        <Icon name="search" size={15}/>
+        <Text style={styles.searchText}>Apply Filters</Text>
+        <Icon name="search" size={15} color='white'/>
      </TouchableOpacity>
      <SearchModal modalVisible={modalVisible} setModalVisible={setModalVisible}/> 
    </> 
@@ -24,12 +24,25 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    color: 'white',
-    width: 300,
+    backgroundColor: 'black',
+    width: 125,
     alignSelf: 'center',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 6,
   },
+  searchButton: {
+    height: 40,
+    width: 100,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 6
+  },
+  searchText: {
+    color: 'white'
+  }
 });
 
 export default SearchButton

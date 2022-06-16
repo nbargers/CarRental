@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { StyleSheet, FlatList, View, Text} from 'react-native';
+import { StyleSheet, FlatList, View, Text, ActivityIndicator} from 'react-native';
 import {  useDispatch, useSelector } from 'react-redux'
-import axios from 'axios';
 import Car from './Car';
 import { selectCarList, updateCarsList, fetchCars, selectCarStatus } from '../app/reducers/carSlice';
 import { selectAllFilters } from '../app/reducers/filtersSlice';
+import Loading from './Loading';
+import NoCars from './NoCars';
 
 const CarList = () => {
   const dispatch = useDispatch()
@@ -53,10 +54,16 @@ const CarList = () => {
   }
 
   return (
-    <View style={styles.cars}>
-      <Text style={styles.text}>Rental Cars Near You:</Text>
-      <FlatList data={carsArray} renderItem={Car} keyExtractor={item => item.id}/>
-    </View>
+    <>
+    {status && (<Loading />)}
+    {!status && carsArray[0] && (
+      <View style={styles.cars}>
+        <Text style={styles.text}>Rental Cars Near You:</Text>
+        <FlatList data={carsArray} renderItem={Car} keyExtractor={item => item.id}/>
+      </View>
+    )}
+    {!status && !carsArray[0] && (<NoCars />)}
+    </>
   );
 }
 

@@ -74,8 +74,6 @@ const SearchModal = ({modalVisible, setModalVisible}) => {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
     flexDirection: 'row',
     marginTop: 60,
     marginBottom: 160,
