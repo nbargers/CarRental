@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, FlatList, View, Text} from 'react-native';
 import {  useDispatch, useSelector } from 'react-redux'
 import Car from './Car';

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput} from 'react-native';
 import {  useDispatch, useSelector } from 'react-redux'
 import { selectText, updateText, resetFilter } from '../app/reducers/filtersSlice';

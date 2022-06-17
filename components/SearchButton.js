@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity} from 'react-native';
 import  Icon  from 'react-native-vector-icons/FontAwesome'
 import SearchModal from './SearchModal';
