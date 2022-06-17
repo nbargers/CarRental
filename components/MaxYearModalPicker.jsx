@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import {  useDispatch, useSelector } from 'react-redux'
@@ -13,7 +12,7 @@ const MaxYearModalPicker = () => {
   const calculateYears = (min) => {
     const arr = []
 
-    for (let i = min; i <= 2022; i++) {
+    for (let i = 2022; i >= min; i--) {
       arr.push({name: i, value: i})
     }
 
@@ -25,7 +24,7 @@ const MaxYearModalPicker = () => {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.labelText}>Minimum Year:</Text>
+        <Text style={styles.labelText}>Max Year:</Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -64,8 +63,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space',
     paddingBottom: 15,
+    width: 195,
   }
    });
 

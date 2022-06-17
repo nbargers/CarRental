@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, TextInput} from 'react-native';
 import {  useDispatch, useSelector } from 'react-redux'
-import { selectText, updateText, updateMake, updateColor, updateMinimumYear, updateMaxYear } from '../app/reducers/filtersSlice';
+import { selectText, updateText, resetFilter } from '../app/reducers/filtersSlice';
 import ColorModalPicker from './ColorModalPicker'
 import MakeModalPicker from './MakeModalPicker';
 import MinimumYearModalPicker from './MinimumYearModalPicker'
@@ -14,10 +14,7 @@ const SearchModal = ({modalVisible, setModalVisible}) => {
   const [ text, setText ] = useState(textInputted)
 
   const reset = () => {
-    dispatch(updateMake('Any'))
-    dispatch(updateColor('Any'))
-    dispatch(updateMinimumYear(1950))
-    dispatch(updateMaxYear(2022))
+    dispatch(resetFilter())
     setText('')
   }
 

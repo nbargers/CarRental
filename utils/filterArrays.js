@@ -9,24 +9,7 @@ export const vehicleColors = [
     {name: 'Black', value: 'Black'},
     {name: 'Grey', value: 'Grey'},
     {name: 'Silver', value: 'Silver'}
-]
-
-export const vehicleColorsName = [
-    {name: 'Any'},
-    {name: 'Red'},
-    {name: 'Yellow'},
-    {name: 'Green'},
-    {name: 'Blue'},
-    {name: 'Gold'},
-    {name: 'White'},
-    {name: 'Black'},
-    {name: 'Grey'},
-    {name: 'Silver'}
-]
-
-export const vehicleColorsArray = [
-    'Any', 'Red', 'Yellow', 'Green', 'Blue', 'Gold', 'White', 'Black', 'Grey', 'Silver'
-]
+];
 
 export const vehicleMakes = [
     {name: 'Any', value: 'Any'},
@@ -81,15 +64,4 @@ export const vehicleMakes = [
     {name: 'VANDERHALL MOTOR WORKS', value: 'VANDERHALL MOTOR WORKS'},
     {name: 'Volkswagen', value: 'Volkswagen'},
     {name: 'Volvo', value: 'Volvo'},
-]
-
-
-export const filterByReference = (arr1, arr2) => {
-    let res = [];
-      res = arr1.filter(el => {
-      return arr2.find(element => {
-        return element.id === el.id;
-      });
-      });
-    return res;
-  }
+];
