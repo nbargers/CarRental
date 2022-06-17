@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import { Picker, onOpen } from 'react-native-actions-sheet-picker';
 import {  useDispatch, useSelector } from 'react-redux'
