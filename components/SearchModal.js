@@ -70,10 +70,10 @@ const SearchModal = ({modalVisible, setModalVisible}) => {
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     flexDirection: 'row',
     marginTop: 60,
     marginBottom: 160,
+    height: 450,
   },
   modalView: {
     margin: 20,
